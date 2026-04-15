@@ -1,0 +1,210 @@
+/* ========== base ========== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400&display=swap');
+
+:root {
+  --bg:       #fafaf8;
+  --bg-card:  #ffffff;
+  --fg:       #1a1a1a;
+  --fg2:      #666;
+  --fg3:      #aaa;
+  --border:   #eee;
+  --accent:   #555;
+  --radius:   6px;
+  --font:     'Inter', -apple-system, sans-serif;
+  --mono:     'IBM Plex Mono', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:      #111;
+    --bg-card: #1a1a1a;
+    --fg:      #e0e0e0;
+    --fg2:     #999;
+    --fg3:     #555;
+    --border:  #222;
+    --accent:  #bbb;
+  }
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(100,100,100,0.2); }
+
+a { color: var(--fg); }
+
+/* ========== layout ========== */
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+header {
+  padding: 3rem 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-title {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--fg3);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.site-title:hover { color: var(--fg2); }
+
+.back {
+  font-size: 0.8rem;
+  color: var(--fg3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.back:hover { color: var(--fg); }
+
+footer {
+  padding: 3rem 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--fg3);
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+}
+footer a {
+  color: var(--fg3);
+  text-decoration: none;
+}
+footer a:hover { color: var(--fg2); }
+
+/* ========== index ========== */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.post-item {
+  display: block;
+  padding: 1.25rem 0;
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: padding-left 0.2s ease;
+}
+.post-item:first-child { border-top: 1px solid var(--border); }
+.post-item:hover { padding-left: 0.5rem; }
+
+.post-item h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 0.3rem;
+  color: var(--fg);
+  line-height: 1.4;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.post-meta time {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--fg3);
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+  background: var(--border);
+  color: var(--fg2);
+  text-transform: lowercase;
+}
+
+/* ========== post ========== */
+.post-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+}
+
+.post-body h2 { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 0.75rem; }
+.post-body h3 { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+.post-body p { margin-bottom: 1rem; color: var(--fg); }
+.post-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+.post-body ul, .post-body ol {
+  margin: 0.5rem 0 1rem 1.25rem;
+}
+.post-body li { margin-bottom: 0.3rem; }
+
+.post-body blockquote {
+  border-left: 2px solid var(--border);
+  padding-left: 1rem;
+  color: var(--fg2);
+  margin: 1rem 0;
+}
+
+.post-body code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: var(--border);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+}
+
+.post-body pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+.post-body pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+
+.post-body img {
+  max-width: 100%;
+  border-radius: var(--radius);
+  margin: 1rem 0;
+}
+
+.post-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* ========== responsive ========== */
+@media (max-width: 480px) {
+  header { padding: 2rem 0 1.5rem; }
+  .post-header h1 { font-size: 1.3rem; }
+}
