@@ -16,7 +16,6 @@ cat > "$FILE" << EOF
 ---
 title: ${TITLE}
 date: ${DATE}
-tags:
 ---
 
 EOF

@@ -168,6 +168,15 @@ def page_shell(title, body, back=False):
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>{html.escape(title)}</title>
 <link rel="stylesheet" href="style.css"/>
+<script>
+// Apply saved theme before paint to prevent flash
+(function() {{
+  var t = localStorage.getItem('theme');
+  if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {{
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }}
+}})();
+</script>
 </head>
 <body>
 <div class="container">
@@ -181,6 +190,49 @@ def page_shell(title, body, back=False):
     <a href="https://taxuslor.github.io">constellation &rarr;</a>
   </footer>
 </div>
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <svg id="iconMoon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+  </svg>
+  <svg id="iconSun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <circle cx="12" cy="12" r="5"/>
+    <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+    <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+    <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+    <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+  </svg>
+</button>
+<script>
+(function() {{
+  var html = document.documentElement;
+  var btn  = document.getElementById('themeToggle');
+  var moon = document.getElementById('iconMoon');
+  var sun  = document.getElementById('iconSun');
+
+  function isDark() {{ return html.getAttribute('data-theme') === 'dark'; }}
+
+  function syncIcons() {{
+    if (isDark()) {{ moon.style.display = 'none'; sun.style.display = 'block'; }}
+    else          {{ moon.style.display = 'block'; sun.style.display = 'none'; }}
+  }}
+  syncIcons();
+
+  btn.addEventListener('click', function() {{
+    if (isDark()) {{
+      html.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    }} else {{
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }}
+    syncIcons();
+  }});
+}})();
+</script>
 </body>
 </html>'''
 
@@ -188,12 +240,10 @@ def page_shell(title, body, back=False):
 def render_index(posts):
     items = []
     for p in posts:
-        tags_html = ''.join(f'<span class="tag">{t}</span>' for t in p['tags'])
         items.append(f'''
     <a href="{p['slug']}.html" class="post-item">
       <div class="post-meta">
         <time>{p['date']}</time>
-        {tags_html}
       </div>
       <h2>{html.escape(p['title'])}</h2>
     </a>''')
@@ -202,12 +252,11 @@ def render_index(posts):
 
 
 def render_post(p):
-    tags_html = ''.join(f'<span class="tag">{t}</span>' for t in p['tags'])
     body = f'''
 <article>
   <div class="post-header">
     <h1>{html.escape(p['title'])}</h1>
-    <div class="post-meta"><time>{p['date']}</time>{tags_html}</div>
+    <div class="post-meta"><time>{p['date']}</time></div>
   </div>
   <div class="post-body">{p['body_html']}</div>
 </article>'''
@@ -219,8 +268,8 @@ def render_post(p):
 def build():
     # clean
     if DIST.exists():
-        shutil.rmtree(DIST)
-    DIST.mkdir()
+        shutil.rmtree(DIST, ignore_errors=True)
+    DIST.mkdir(exist_ok=True)
 
     # copy static assets
     if STATIC.exists():

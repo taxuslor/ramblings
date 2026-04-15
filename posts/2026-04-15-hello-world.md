@@ -1,7 +1,6 @@
 ---
 title: Hello World
 date: 2026-04-15
-tags: meta, first
 ---
 
 This is my first note. A place for random thoughts, code snippets, and things I want to remember.

@@ -1,7 +1,6 @@
 ---
 title: Setting Up GitHub Pages as a Constellation
 date: 2026-04-15
-tags: dev, github
 ---
 
 Today I set up my GitHub Pages as an interactive point-cloud constellation. Each project is a glowing node — click it, the camera zooms in, and you land on the project page.
