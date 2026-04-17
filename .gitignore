@@ -1,5 +1,18 @@
 dist/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 .DS_Store
 usage.txt
+
+# Python virtual environments and tooling caches
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editor/project-local settings
+.vscode/
+.idea/
