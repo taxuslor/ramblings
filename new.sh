@@ -4,7 +4,10 @@
 
 TITLE="${1:-untitled}"
 DATE=$(date +%Y-%m-%d)
-SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+SLUG=$(echo "$TITLE" | \
+  tr '[:upper:]' '[:lower:]' | \
+  sed 's/ /-/g' | \
+  sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
 FILE="posts/${DATE}-${SLUG}.md"
 
 if [ -f "$FILE" ]; then

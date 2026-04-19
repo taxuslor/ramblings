@@ -204,7 +204,7 @@ def page_shell(title, body, back=False):
 <div class="container">
   <header>
     {back_link}
-    <a href="." class="site-title">taxuslor / blogs</a>
+    <a href="." class="site-title">taxuslor / ramblings</a>
   </header>
   <main>{body}</main>
   <footer>
@@ -272,7 +272,7 @@ def render_index(posts):
     </a>"""
         )
     body = '<div class="post-list">' + "".join(items) + "</div>"
-    return page_shell("blogs — taxuslor", body)
+    return page_shell("ramblings — taxuslor", body)
 
 
 def render_post(p):
